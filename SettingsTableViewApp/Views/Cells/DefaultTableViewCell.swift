@@ -1,5 +1,5 @@
 //
-//  withSubTitleTableViewCell.swift
+//  DefaultTableViewCell.swift
 //  SettingsTableViewApp
 //
 //  Created by Даниил Смирнов on 30.05.2022.
@@ -7,17 +7,16 @@
 
 import UIKit
 
-class withSubTitleTableViewCell: UITableViewCell {
+class DefaultTableViewCell: UITableViewCell {
 
-    let type = ContentModel.contentType.imageTitleSubTitle
-        
+    let type = ContentModel.contentType.defaultCell
+    static let reuseId = "DefaultTableViewCell"
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .value1, reuseIdentifier: reuseIdentifier)
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-
 }
