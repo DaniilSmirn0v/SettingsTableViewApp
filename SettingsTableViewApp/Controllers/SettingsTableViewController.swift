@@ -10,44 +10,33 @@ import UIKit
 class SettingsTableViewController: UIViewController {
     
     //MARK: - Model
-    var section = ContentModel.sections
+    var sections = ContentModel.sections
     var rows = ContentModel.rowsInSection
     
-    //MARK: - Views
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: view.bounds, style: .grouped)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(defaultTableViewCell.self, forCellReuseIdentifier: "default")
-        tableView.register(withSwitcherTableViewCell.self, forCellReuseIdentifier: "switcher")
-        tableView.register(withSubTitleTableViewCell.self, forCellReuseIdentifier: "subTitle")
-        tableView.register(accessorryTableViewCell.self, forCellReuseIdentifier: "accessorry")
-        
-        return tableView
-    }()
+    //MARK: - Initialize View
+    private var settingsTableView: SettingsTableView? {
+        guard isViewLoaded else { return nil }
+        return view as? SettingsTableView
+    }
     
     //MARK: - LifeCycle
+    override func loadView() {
+        self.view = SettingsTableView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
-        setupHieararchy()
+        configureView()
         setupNavigationController()
-        setupLayout()
     }
+}
+
+//MARK: - Configure ViewController
+extension SettingsTableViewController {
     
-    //MARK: - Settings
-    private func setupHieararchy() {
-        view.addSubview(tableView)
-    }
-    
-    private func setupLayout() {
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
+    private func configureView() {
+        settingsTableView?.tableView.delegate = self
+        settingsTableView?.tableView.dataSource = self
     }
     
     private func setupNavigationController() {
@@ -56,11 +45,12 @@ class SettingsTableViewController: UIViewController {
     }
 }
 
+
 //MARK: - TableViewDataSource
 extension SettingsTableViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        section.count
+        sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -68,13 +58,13 @@ extension SettingsTableViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = ContentModel.sections[indexPath.section]
-        if let rows = ContentModel.rowsInSection[section] {
+        let section = sections[indexPath.section]
+        if let rows = rows[section] {
             let row = rows[indexPath.row]
             
             switch row.type {
             case .imageTitleSwitcher:
-                if let cell = tableView.dequeueReusableCell(withIdentifier: "switcher", for: indexPath) as? withSwitcherTableViewCell {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: WithSwitcherTableViewCell.reuseId, for: indexPath) as? WithSwitcherTableViewCell {
                     var content = cell.defaultContentConfiguration()
                     content.image = UIImage(systemName: row.image ?? "circle")
                     content.text = row.title
@@ -83,7 +73,7 @@ extension SettingsTableViewController: UITableViewDataSource {
                     return cell
                 }
             case .imageTitleSubTitle:
-                if let cell = tableView.dequeueReusableCell(withIdentifier: "subTitle", for: indexPath) as? withSubTitleTableViewCell {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: WithSubTitleTableViewCell.reuseId, for: indexPath) as? WithSubTitleTableViewCell {
                     var content = cell.defaultContentConfiguration()
                     content.image = UIImage(systemName: row.image ?? "circle")
                     content.text = row.title
@@ -94,7 +84,7 @@ extension SettingsTableViewController: UITableViewDataSource {
                     return cell
                 }
             case .defaultCell:
-                if let cell = tableView.dequeueReusableCell(withIdentifier: "default", for: indexPath) as? defaultTableViewCell {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: DefaultTableViewCell.reuseId, for: indexPath) as? DefaultTableViewCell {
                     var content = cell.defaultContentConfiguration()
                     content.image = UIImage(systemName: row.image ?? "circle")
                     content.text = row.title
@@ -104,7 +94,7 @@ extension SettingsTableViewController: UITableViewDataSource {
                     return cell
                 }
             case .withBadge:
-                if let cell = tableView.dequeueReusableCell(withIdentifier: "accessorry", for: indexPath) as? accessorryTableViewCell {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: AccessorryTableViewCell.reuseId, for: indexPath) as? AccessorryTableViewCell {
                     var content = cell.defaultContentConfiguration()
                     content.image = UIImage(systemName: row.image ?? "circle")
                     content.text = row.title

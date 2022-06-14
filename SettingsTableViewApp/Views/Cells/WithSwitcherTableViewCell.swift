@@ -1,5 +1,5 @@
 //
-//  withSwitcherTableViewCell.swift
+//  WithSwitcherTableViewCell.swift
 //  SettingsTableViewApp
 //
 //  Created by Даниил Смирнов on 30.05.2022.
@@ -7,10 +7,11 @@
 
 import UIKit
 
-class withSwitcherTableViewCell: UITableViewCell {
+class WithSwitcherTableViewCell: UITableViewCell {
 
     let type = ContentModel.contentType.imageTitleSwitcher
-    
+    static let reuseId = "WithSwitcherTableViewCell"
+
     private lazy var image: UIImageView = {
         var image = UIImageView(image: UIImage())
 

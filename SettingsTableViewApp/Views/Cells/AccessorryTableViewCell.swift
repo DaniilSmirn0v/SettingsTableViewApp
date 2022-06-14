@@ -1,5 +1,5 @@
 //
-//  accessorryTableViewCell.swift
+//  AccessorryTableViewCell.swift
 //  SettingsTableViewApp
 //
 //  Created by Даниил Смирнов on 31.05.2022.
@@ -7,15 +7,15 @@
 
 import UIKit
 
-class accessorryTableViewCell: UITableViewCell {
+class AccessorryTableViewCell: UITableViewCell {
     
     let type = ContentModel.contentType.withBadge
-    
-    
+    static let reuseId = "AccessorryTableViewCell"
     
     private lazy var image: UIImageView = {
         var image = UIImageView(image: UIImage())
-
+        image.contentMode = .center
+        
         return image
     }()
     
@@ -29,7 +29,7 @@ class accessorryTableViewCell: UITableViewCell {
         let badgeView = UITableViewCell()
          let size: CGFloat = 22
          let digits = Int.random(in: 1...5)
-         let width = max(size, 0.7 * size * 1) // perfect circle is smallest allowed
+         let width = max(size, 0.7 * size * 1)
          let badge = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: size))
          badge.text = "\(digits)"
          badge.layer.cornerRadius = size / 2
@@ -38,6 +38,7 @@ class accessorryTableViewCell: UITableViewCell {
          badge.textColor = .white
          badge.backgroundColor = .red
          badgeView.accessoryView = badge
+         
         return badgeView
     }()
     
@@ -54,14 +55,12 @@ class accessorryTableViewCell: UITableViewCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.distribution = .fill
-        stackView.spacing = 180
+        stackView.spacing = 170
         stackView.alignment = .center
         
         return stackView
     }()
     
-  
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: "accessorry")
         addSubview(horrizontalStack)
@@ -74,14 +73,15 @@ class accessorryTableViewCell: UITableViewCell {
         horrizontalStack.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         horrizontalStack.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         horrizontalStack.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    
+    func setupDataFrom(model: ContentModel) -> UIListContentConfiguration {
+        var content: UIListContentConfiguration!
+        content
+        return content
+    }
 }
