@@ -12,7 +12,7 @@ class SettingsTableViewController: UIViewController {
     //MARK: - Model
     var sections = ContentModel.sections
     var rows = ContentModel.rowsInSection
-    
+        
     //MARK: - Initialize View
     private var settingsTableView: SettingsTableView? {
         guard isViewLoaded else { return nil }
@@ -65,42 +65,29 @@ extension SettingsTableViewController: UITableViewDataSource {
             switch row.type {
             case .imageTitleSwitcher:
                 if let cell = tableView.dequeueReusableCell(withIdentifier: WithSwitcherTableViewCell.reuseId, for: indexPath) as? WithSwitcherTableViewCell {
-                    var content = cell.defaultContentConfiguration()
-                    content.image = UIImage(systemName: row.image ?? "circle")
-                    content.text = row.title
+                    let content = cell.configureCell(from: row)
                     cell.contentConfiguration = content
-                    
                     return cell
                 }
             case .imageTitleSubTitle:
                 if let cell = tableView.dequeueReusableCell(withIdentifier: WithSubTitleTableViewCell.reuseId, for: indexPath) as? WithSubTitleTableViewCell {
-                    var content = cell.defaultContentConfiguration()
-                    content.image = UIImage(systemName: row.image ?? "circle")
-                    content.text = row.title
-                    content.secondaryText = row.subTitle
+                    let content = cell.configureCell(from: row)
                     cell.accessoryType = .disclosureIndicator
                     cell.contentConfiguration = content
-                    
                     return cell
                 }
             case .defaultCell:
                 if let cell = tableView.dequeueReusableCell(withIdentifier: DefaultTableViewCell.reuseId, for: indexPath) as? DefaultTableViewCell {
-                    var content = cell.defaultContentConfiguration()
-                    content.image = UIImage(systemName: row.image ?? "circle")
-                    content.text = row.title
+                    let content = cell.configureCell(from: row)
                     cell.accessoryType = .disclosureIndicator
                     cell.contentConfiguration = content
-                    
                     return cell
                 }
             case .withBadge:
                 if let cell = tableView.dequeueReusableCell(withIdentifier: AccessorryTableViewCell.reuseId, for: indexPath) as? AccessorryTableViewCell {
-                    var content = cell.defaultContentConfiguration()
-                    content.image = UIImage(systemName: row.image ?? "circle")
-                    content.text = row.title
+                    let content = cell.configureCell(from: row)
                     cell.accessoryType = .disclosureIndicator
                     cell.contentConfiguration = content
-                    
                     return cell
                 }
             }

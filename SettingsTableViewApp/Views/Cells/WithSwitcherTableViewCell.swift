@@ -57,4 +57,11 @@ class WithSwitcherTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func configureCell(from model: ContentModel) -> UIListContentConfiguration {
+        var content = defaultContentConfiguration()
+        content.image = UIImage(systemName: model.image ?? "circle")
+        content.text = model.title
+        return content
+    }
 }

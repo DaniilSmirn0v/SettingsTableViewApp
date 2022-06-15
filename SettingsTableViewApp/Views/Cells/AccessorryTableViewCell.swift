@@ -79,9 +79,11 @@ class AccessorryTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupDataFrom(model: ContentModel) -> UIListContentConfiguration {
-        var content: UIListContentConfiguration!
-        content
+    func configureCell(from model: ContentModel) -> UIListContentConfiguration {
+        var content = defaultContentConfiguration()
+        content.image = UIImage(systemName: model.image ?? "circle")
+        content.text = model.title
         return content
     }
+    
 }
